@@ -1,8 +1,10 @@
 const multer = require("multer");
 const mongodb = require("mongodb");
 const { MongoClient, ObjectId } = require("mongodb");
-
 const { Readable } = require("stream");
+
+const { promise } = require("../middlewares/promise");
+const { getAllTrackFiles } = require("../services/track");
 
 // Database Configurations
 
@@ -100,3 +102,19 @@ exports.getTrack = async (req, res) => {
     res.end();
   });
 };
+
+exports.getAllTrackFiles = promise(async (req, res) => {
+  const trackFiles = await getAllTrackFiles();
+
+  res.status(200).json({ trackFiles });
+});
+
+exports.getAllTrackFilesForPublisher = promise(async (req, res) => {
+  const trackFiles = await getAllTrackFiles();
+
+  const filteredFiles = trackFiles.filter(
+    (file) => file.metadata.publisherId !== req.user._id
+  );
+
+  res.status(200).json({ trackFiles: filteredFiles });
+});

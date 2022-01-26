@@ -45,3 +45,11 @@
     track: File,
     trackName: String,
 ```
+
+### To get all Track Files
+
+- tracks :get
+
+### To get all Track Files for a specific Publisher who published them
+
+- tracks/for-publisher :get
