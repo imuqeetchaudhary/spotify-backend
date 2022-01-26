@@ -30,3 +30,18 @@
     password: String,
 }
 ```
+
+## Routes for Tracks
+
+### To get an audio, video track
+
+- tracks/:id: :get (where id === trackId)
+
+### To post an audio, video track
+
+- tracks :post
+
+```js
+    track: File,
+    trackName: String,
+```
