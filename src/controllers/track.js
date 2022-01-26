@@ -14,7 +14,7 @@ MongoClient.connect("mongodb://localhost:27017", (err, database) => {
     );
     process.exit(1);
   }
-  db = database.db("spotify");
+  db = database.db(`${process.env.DB_NAME}`);
 });
 
 exports.postTrack = async (req, res) => {
