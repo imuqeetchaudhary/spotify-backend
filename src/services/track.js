@@ -1,6 +1,6 @@
 const { TracksFile } = require("../db/models/track");
 
-exports.getAllTrackFiles = async () => {
+exports.getAllTracksFiles = async () => {
   try {
     const files = await TracksFile.find();
     return files;

@@ -4,7 +4,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 const { Readable } = require("stream");
 
 const { promise } = require("../middlewares/promise");
-const { getAllTrackFiles } = require("../services/track");
+const { getAllTracksFiles } = require("../services/track");
 
 // Database Configurations
 
@@ -103,14 +103,14 @@ exports.getTrack = async (req, res) => {
   });
 };
 
-exports.getAllTrackFiles = promise(async (req, res) => {
-  const trackFiles = await getAllTrackFiles();
+exports.getAllTracksFiles = promise(async (req, res) => {
+  const trackFiles = await getAllTracksFiles();
 
   res.status(200).json({ trackFiles });
 });
 
-exports.getAllTrackFilesForPublisher = promise(async (req, res) => {
-  const trackFiles = await getAllTrackFiles();
+exports.getAllTracksFilesForPublisher = promise(async (req, res) => {
+  const trackFiles = await getAllTracksFiles();
 
   const filteredFiles = trackFiles.filter(
     (file) => file.metadata.publisherId !== req.user._id

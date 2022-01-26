@@ -6,13 +6,13 @@ const { authentication } = require("../middlewares/is-auth");
 trackRouter.get(
   "/for-publisher",
   authentication,
-  trackController.getAllTrackFilesForPublisher
+  trackController.getAllTracksFilesForPublisher
 );
 
 trackRouter.post("/", authentication, trackController.postTrack);
 
 trackRouter.get("/:trackId", trackController.getTrack);
 
-trackRouter.get("/", trackController.getAllTrackFiles);
+trackRouter.get("/", trackController.getAllTracksFiles);
 
 module.exports = trackRouter;
