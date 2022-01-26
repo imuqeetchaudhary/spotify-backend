@@ -1,9 +1,8 @@
-const mongoose = require("mongoose");
+const { TrackFile } = require("../db/models/track");
 
 exports.getAllTrackFiles = async () => {
-  const TracksFiles = mongoose.connection.db.collection("tracks.files");
   try {
-    const files = await TracksFiles.find().toArray();
+    const files = await TrackFile.find();
     return files;
   } catch (err) {
     throw new Error(err);
