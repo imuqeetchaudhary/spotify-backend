@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const trackFileSchema = new Schema({
+const tracksFileSchema = new Schema({
   length: {
     type: Number,
   },
@@ -19,4 +19,4 @@ const trackFileSchema = new Schema({
   },
 });
 
-exports.TrackFile = mongoose.model("Tracks.file", trackFileSchema);
+exports.TracksFile = mongoose.model("Tracks.file", tracksFileSchema);
