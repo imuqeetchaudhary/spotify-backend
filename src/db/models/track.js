@@ -1,3 +1,4 @@
+const { Binary } = require("mongodb");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -19,4 +20,14 @@ const tracksFileSchema = new Schema({
   },
 });
 
+const tracksChunkSchema = new Schema({
+  files_id: {
+    type: Schema.Types.ObjectId,
+  },
+  n: {
+    type: Number,
+  },
+});
+
 exports.TracksFile = mongoose.model("Tracks.file", tracksFileSchema);
+exports.TracksChunk = mongoose.model("Tracks.chunk", tracksChunkSchema);
