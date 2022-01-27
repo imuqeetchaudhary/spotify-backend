@@ -113,7 +113,7 @@ exports.getAllTracksFilesForPublisher = promise(async (req, res) => {
   const trackFiles = await trackService.getAllTracksFiles();
 
   const filteredFiles = trackFiles.filter(
-    (file) => file.metadata.publisherId !== req.user._id
+    (file) => file.metadata.publisherId != req.user._id
   );
 
   res.status(200).json({ trackFiles: filteredFiles });
