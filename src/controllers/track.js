@@ -4,7 +4,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 const { Readable } = require("stream");
 
 const { promise } = require("../middlewares/promise");
-const { getAllTracksFiles } = require("../services/track");
+const trackService = require("../services/track");
 
 // Database Configurations
 
@@ -104,17 +104,40 @@ exports.getTrack = async (req, res) => {
 };
 
 exports.getAllTracksFiles = promise(async (req, res) => {
-  const trackFiles = await getAllTracksFiles();
+  const trackFiles = await trackService.getAllTracksFiles();
 
   res.status(200).json({ trackFiles });
 });
 
 exports.getAllTracksFilesForPublisher = promise(async (req, res) => {
-  const trackFiles = await getAllTracksFiles();
+  const trackFiles = await trackService.getAllTracksFiles();
 
   const filteredFiles = trackFiles.filter(
     (file) => file.metadata.publisherId !== req.user._id
   );
 
   res.status(200).json({ trackFiles: filteredFiles });
+});
+
+exports.deleteTrack = promise(async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user._id;
+
+  const tracksFile = await trackService.getSingleTracksFile({ id });
+
+  if (tracksFile === null)
+    return res.status(400).json({
+      message: "Track not found",
+    });
+
+  if (tracksFile.metadata.publisherId != userId)
+    return res.status(400).json({
+      message: "Only the track publisher can delete this track.",
+    });
+
+  const chunkMessage = await trackService.deleteTracksChunk({ id });
+
+  const fileMessage = await trackService.deleteTracksFile({ id });
+
+  res.status(200).json({ message: fileMessage });
 });

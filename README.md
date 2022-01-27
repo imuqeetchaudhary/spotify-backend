@@ -53,3 +53,7 @@
 ### To get all Track Files for a specific Publisher who published them
 
 - tracks/for-publisher :get
+
+### To delete a track by the track publisher
+
+- tracks/:id: :delete :protected (where id === trackId)

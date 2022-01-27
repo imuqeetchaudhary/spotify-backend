@@ -15,4 +15,6 @@ trackRouter.get("/:trackId", trackController.getTrack);
 
 trackRouter.get("/", trackController.getAllTracksFiles);
 
+trackRouter.delete("/:id", authentication, trackController.deleteTrack);
+
 module.exports = trackRouter;
