@@ -130,7 +130,7 @@ exports.deleteTrack = promise(async (req, res) => {
       message: "Track not found",
     });
 
-  if (tracksFile.metadata.publisherId != userId)
+  if (tracksFile.metadata.publisherId == userId)
     return res.status(400).json({
       message: "Only the track publisher can delete this track.",
     });
