@@ -21,16 +21,33 @@ MongoClient.connect("mongodb://localhost:27017", (err, database) => {
 
 exports.postTrack = async (req, res) => {
   const storage = multer.memoryStorage();
+
+  const fileFilter = (req, file, cb) => {
+    if (file.mimetype === "audio/mp3" || file.mimetype === "video/mpeg") {
+      cb(null, true);
+    } else {
+      console.log(file.mimetype);
+      cb(
+        new Error(
+          "File type not supported. Only mp3, mpeg & m4r file types are allowed"
+        ),
+        false
+      );
+    }
+  };
+
   const upload = multer({
     storage,
-    limits: { fields: 1, files: 1, parts: 2, fileSize: 6000000 },
+    fileFilter,
+    limits: { fields: 1, files: 1, parts: 2, fileSize: 1024 * 1024 * 16 },
   });
 
   upload.single("track")(req, res, (err) => {
     if (err) {
+      console.log(err.message);
       return res.status(400).json({
-        message:
-          "Upload Request Validation Failed. Maximun size of file should be less than or equal to 6 MBs",
+        error: "Upload Request Validation Failed.",
+        message: `${err.message}. Maximun file size should be less than 16MBs`,
       });
     } else if (!req.body.trackName) {
       return res.status(400).json({ message: "trackName is a required field" });
