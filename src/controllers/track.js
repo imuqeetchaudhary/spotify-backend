@@ -29,7 +29,7 @@ exports.postTrack = async (req, res) => {
       console.log(file.mimetype);
       cb(
         new Error(
-          "File type not supported. Only mp3, mpeg & m4r file types are allowed"
+          "File type not supported. Only mp3, mpeg file types are allowed"
         ),
         false
       );
