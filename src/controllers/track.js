@@ -113,7 +113,7 @@ exports.getAllTracksFilesForPublisher = promise(async (req, res) => {
   const trackFiles = await trackService.getAllTracksFiles();
 
   const filteredFiles = trackFiles.filter(
-    (file) => file.metadata.publisherId != req.user._id
+    (file) => file.metadata.publisherId == req.user._id
   );
 
   res.status(200).json({ trackFiles: filteredFiles });
@@ -130,7 +130,7 @@ exports.deleteTrack = promise(async (req, res) => {
       message: "Track not found",
     });
 
-  if (tracksFile.metadata.publisherId == userId)
+  if (tracksFile.metadata.publisherId != userId)
     return res.status(400).json({
       message: "Only the track publisher can delete this track.",
     });
